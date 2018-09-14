@@ -79,7 +79,7 @@ export function toArray(text, options = {}) {
 }
 
 export default function Emoji(
-  { text, onlyEmojiClassName, options = {}, className, ...rest }
+  { text, onlyEmojiClassName, options = {}, className, render, ...rest }
 ) {
   function isOnlyEmoji(output) {
     if (output.length > 3) return false;
@@ -96,10 +96,9 @@ export default function Emoji(
     [onlyEmojiClassName]: isOnlyEmoji(output)
   });
 
-  return (
-    <span {...rest} className={classes}>
-      {output}
-    </span>
+  return render ? 
+    render({classes, output, ...rest}) : 
+    <span {...rest} className={classes}>{output}</span>
   );
 }
 
